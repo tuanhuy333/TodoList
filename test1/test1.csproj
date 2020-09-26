@@ -208,6 +208,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\TextFile1.txt" />
     <Content Include="App_Data\TodoDB.mdf" />
     <Content Include="App_Data\TodoDB_log.ldf">
       <DependentUpon>TodoDB.mdf</DependentUpon>

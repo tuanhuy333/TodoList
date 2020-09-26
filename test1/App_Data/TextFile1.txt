@@ -1,0 +1,34 @@
+﻿CREATE TABLE [dbo].[comment] (
+    [comment_id]      INT  IDENTITY (1, 1) NOT NULL,
+    [todo_id]         INT  NOT NULL,
+    [user_id]         INT  NOT NULL,
+    [content_comment] TEXT NOT NULL,
+    CONSTRAINT [PK_comment] PRIMARY KEY CLUSTERED ([comment_id] ASC),
+    CONSTRAINT [FK_comment_ToTable] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user] ([user_id]),
+    CONSTRAINT [FK_comment_ToTable_1] FOREIGN KEY ([todo_id]) REFERENCES [dbo].[todoitem] ([todo_id])
+);
+
+CREATE TABLE [dbo].[todoitem] (
+    [todo_id]     INT            IDENTITY (1, 1) NOT NULL,
+    [user_id]     INT            NOT NULL,
+    [title]       NVARCHAR (255) NOT NULL,
+    [start_date]  DATE           NOT NULL,
+    [end_date]    DATE           NOT NULL,
+    [status]      INT            NOT NULL,
+    [partner]     NVARCHAR (255) NOT NULL,
+    [file_attach] NVARCHAR (255) NULL,
+    [phamvi]      NVARCHAR (50)  NULL,
+    CONSTRAINT [PK_todoitem] PRIMARY KEY CLUSTERED ([todo_id] ASC),
+    CONSTRAINT [FK_todoitem_ToTable] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user] ([user_id])
+);
+
+CREATE TABLE [dbo].[user] (
+    [user_id]       INT         IDENTITY (1, 1) NOT NULL,
+    [user_name]     NCHAR (50)  NOT NULL,
+    [user_password] NCHAR (50)  NOT NULL,
+    [user_email]    NCHAR (255) NULL,
+    [user_type]     NCHAR (10)  NULL,
+    [user_phone]    NCHAR (10)  NULL,
+    CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED ([user_id] ASC)
+);
+
