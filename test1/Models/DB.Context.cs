@@ -27,6 +27,6 @@ namespace test1.Models
     
         public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<todoitem> todoitems { get; set; }
-        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<account> accounts { get; set; }
     }
 }

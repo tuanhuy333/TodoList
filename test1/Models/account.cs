@@ -12,25 +12,13 @@ namespace test1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class account
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
-        {
-            this.comments = new HashSet<comment>();
-            this.todoitems = new HashSet<todoitem>();
-        }
-    
         public int user_id { get; set; }
         public string user_name { get; set; }
         public string user_password { get; set; }
         public string user_email { get; set; }
         public string user_type { get; set; }
         public string user_phone { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<comment> comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<todoitem> todoitems { get; set; }
     }
 }

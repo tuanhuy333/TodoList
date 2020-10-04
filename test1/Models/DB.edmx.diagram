@@ -7,10 +7,7 @@
       <Diagram DiagramId="274548296ffa4bec84d186761d9b0197" Name="Diagram1">
         <EntityTypeShape EntityType="DbContext.comment" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DbContext.todoitem" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DbContext.user" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
-        <AssociationConnector Association="DbContext.FK_comment_ToTable" ManuallyRouted="false" />
-        <AssociationConnector Association="DbContext.FK_comment_ToTable_1" ManuallyRouted="false" />
-        <AssociationConnector Association="DbContext.FK_todoitem_ToTable" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DbContext.account" Width="1.5" PointX="0.75" PointY="6.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

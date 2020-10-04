@@ -18,8 +18,5 @@ namespace test1.Models
         public int todo_id { get; set; }
         public int user_id { get; set; }
         public string content_comment { get; set; }
-    
-        public virtual user user { get; set; }
-        public virtual todoitem todoitem { get; set; }
     }
 }

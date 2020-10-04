@@ -17,7 +17,7 @@ namespace test1.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
+            return View("~/Views/Home/View.cshtml");
         }
 
         public ActionResult Contact()

@@ -4,19 +4,47 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DbContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DbContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'todo.dbo.account' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="user_id" />
+            
+            
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_email" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_type" Type="nvarchar" MaxLength="10" />
+          <Property Name="user_phone" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'todo.dbo.comment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="comment">
           <Key>
             <PropertyRef Name="comment_id" />
+            
+            
+            
           </Key>
           <Property Name="comment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="todo_id" Type="int" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="content_comment" Type="text" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'todo.dbo.todoitem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="todoitem">
           <Key>
             <PropertyRef Name="todo_id" />
+            
+            
+            
+            
+            
+            
           </Key>
           <Property Name="todo_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
@@ -28,72 +56,40 @@
           <Property Name="file_attach" Type="nvarchar" MaxLength="255" />
           <Property Name="phamvi" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="user_id" />
-          </Key>
-          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="user_name" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="user_password" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="user_email" Type="nchar" MaxLength="255" />
-          <Property Name="user_type" Type="nchar" MaxLength="10" />
-          <Property Name="user_phone" Type="nchar" MaxLength="10" />
-        </EntityType>
-        <Association Name="FK_comment_ToTable">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_comment_ToTable_1">
-          <End Role="todoitem" Type="Self.todoitem" Multiplicity="1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="todoitem">
-              <PropertyRef Name="todo_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="todo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_todoitem_ToTable">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="todoitem" Type="Self.todoitem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="todoitem">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DbContextStoreContainer">
-          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="todoitem" EntityType="Self.todoitem" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_comment_ToTable" Association="Self.FK_comment_ToTable">
-            <End Role="user" EntitySet="user" />
-            <End Role="comment" EntitySet="comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_comment_ToTable_1" Association="Self.FK_comment_ToTable_1">
-            <End Role="todoitem" EntitySet="todoitem" />
-            <End Role="comment" EntitySet="comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_todoitem_ToTable" Association="Self.FK_todoitem_ToTable">
-            <End Role="user" EntitySet="user" />
-            <End Role="todoitem" EntitySet="todoitem" />
-          </AssociationSet>
+          <EntitySet Name="account" EntityType="Self.account" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [account].[user_id] AS [user_id], 
+    [account].[user_name] AS [user_name], 
+    [account].[user_password] AS [user_password], 
+    [account].[user_email] AS [user_email], 
+    [account].[user_type] AS [user_type], 
+    [account].[user_phone] AS [user_phone]
+    FROM [dbo].[account] AS [account]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="comment" EntityType="Self.comment" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [comment].[comment_id] AS [comment_id], 
+    [comment].[todo_id] AS [todo_id], 
+    [comment].[user_id] AS [user_id], 
+    [comment].[content_comment] AS [content_comment]
+    FROM [dbo].[comment] AS [comment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="todoitem" EntityType="Self.todoitem" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [todoitem].[todo_id] AS [todo_id], 
+    [todoitem].[user_id] AS [user_id], 
+    [todoitem].[title] AS [title], 
+    [todoitem].[start_date] AS [start_date], 
+    [todoitem].[end_date] AS [end_date], 
+    [todoitem].[status] AS [status], 
+    [todoitem].[partner] AS [partner], 
+    [todoitem].[file_attach] AS [file_attach], 
+    [todoitem].[phamvi] AS [phamvi]
+    FROM [dbo].[todoitem] AS [todoitem]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DbContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -105,8 +101,6 @@
           <Property Name="todo_id" Type="Int32" Nullable="false" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="content_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK_comment_ToTable" FromRole="comment" ToRole="user" />
-          <NavigationProperty Name="todoitem" Relationship="Self.FK_comment_ToTable_1" FromRole="comment" ToRole="todoitem" />
         </EntityType>
         <EntityType Name="todoitem">
           <Key>
@@ -121,75 +115,23 @@
           <Property Name="partner" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="file_attach" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="phamvi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="comments" Relationship="Self.FK_comment_ToTable_1" FromRole="todoitem" ToRole="comment" />
-          <NavigationProperty Name="user" Relationship="Self.FK_todoitem_ToTable" FromRole="todoitem" ToRole="user" />
         </EntityType>
-        <EntityType Name="user">
+        <EntityContainer Name="todoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="comments" EntityType="Self.comment" />
+          <EntitySet Name="todoitems" EntityType="Self.todoitem" />
+          <EntitySet Name="accounts" EntityType="DbContext.account" />
+        </EntityContainer>
+        <EntityType Name="account">
           <Key>
             <PropertyRef Name="user_id" />
           </Key>
           <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="user_password" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="user_email" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
-          <Property Name="user_type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="user_phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="comments" Relationship="Self.FK_comment_ToTable" FromRole="user" ToRole="comment" />
-          <NavigationProperty Name="todoitems" Relationship="Self.FK_todoitem_ToTable" FromRole="user" ToRole="todoitem" />
+          <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="user_phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_comment_ToTable">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_comment_ToTable_1">
-          <End Role="todoitem" Type="Self.todoitem" Multiplicity="1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="todoitem">
-              <PropertyRef Name="todo_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="todo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_todoitem_ToTable">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="todoitem" Type="Self.todoitem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="todoitem">
-              <PropertyRef Name="user_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="todoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="comments" EntityType="Self.comment" />
-          <EntitySet Name="todoitems" EntityType="Self.todoitem" />
-          <EntitySet Name="users" EntityType="Self.user" />
-          <AssociationSet Name="FK_comment_ToTable" Association="Self.FK_comment_ToTable">
-            <End Role="user" EntitySet="users" />
-            <End Role="comment" EntitySet="comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_comment_ToTable_1" Association="Self.FK_comment_ToTable_1">
-            <End Role="todoitem" EntitySet="todoitems" />
-            <End Role="comment" EntitySet="comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_todoitem_ToTable" Association="Self.FK_todoitem_ToTable">
-            <End Role="user" EntitySet="users" />
-            <End Role="todoitem" EntitySet="todoitems" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -221,15 +163,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="DbContext.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="user_name" ColumnName="user_name" />
-                <ScalarProperty Name="user_password" ColumnName="user_password" />
-                <ScalarProperty Name="user_email" ColumnName="user_email" />
-                <ScalarProperty Name="user_type" ColumnName="user_type" />
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="DbContext.account">
+              <MappingFragment StoreEntitySet="account">
                 <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -11,27 +11,22 @@ namespace test1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class todoitem
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public todoitem()
-        {
-            this.comments = new HashSet<comment>();
-        }
-    
         public int todo_id { get; set; }
         public int user_id { get; set; }
         public string title { get; set; }
+        
+        
         public System.DateTime start_date { get; set; }
+        
+        public string DateCreatedFormatted { get { return this.start_date.ToString("dd/MM/yyyy"); } }
         public System.DateTime end_date { get; set; }
         public int status { get; set; }
         public string partner { get; set; }
         public string file_attach { get; set; }
         public string phamvi { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<comment> comments { get; set; }
-        public virtual user user { get; set; }
     }
 }
