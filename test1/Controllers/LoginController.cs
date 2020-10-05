@@ -31,5 +31,10 @@ namespace test1.Controllers
             else
                 return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult Logout()
+        {
+            Session.Remove("username");
+            return RedirectToAction("index", "login", new { area = "" });
+        }
     }
 }

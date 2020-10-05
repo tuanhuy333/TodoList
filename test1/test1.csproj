@@ -300,6 +300,8 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\Todo\ShowTable.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Todo\add.cshtml" />
     <Content Include="Views\Todo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>

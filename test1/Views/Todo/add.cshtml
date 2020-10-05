@@ -1,6 +1,5 @@
 ﻿@model test1.ViewModel.TodoViewModel
 @{
-    
     Layout = null;
 }
 
@@ -10,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Edit</title>
+    <title>Add</title>
     <link rel="stylesheet" href="~/Content/detail/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
     <link rel="stylesheet" href="~/Content/detail/assets/fonts/ionicons.min.css">
@@ -22,68 +21,70 @@
         <section class="portfolio-block hire-me">
             <div class="container">
                 <div class="heading">
-                    <h2>CHi Tiết</h2>
+                    <h2>ADD NEW</h2>
                 </div>
-                <form action="" method="post">
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col"><label class="col-form-label">Tên Nhân Viên:</label></div>
-                            @Html.TextBoxFor(model => model.username, new { @class = "form-control", disabled = "disabled" })
-                            <input type="hidden" name="todo_id" value="@Model.todo_id" />
-                        </div>
-                    </div>
+                @using (Html.BeginForm("add", "Todo", FormMethod.Post))
+                {
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Tên công việc:</label></div>
-                            @Html.TextBoxFor(model => model.tenCV, new { @class = "form-control", disabled = "disabled" })
+                            @Html.TextBoxFor(model => model.tenCV, new { @class = "form-control", required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Ngày bắt đầu:&nbsp;</label></div>
-                            @Html.TextBoxFor(model => model.ngayBD, new { @class = "form-control", disabled = "disabled" })
+                            @Html.TextBoxFor(model => model.ngayBD, new { type = "date", @class = "form-control", required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Ngày kết thúc:&nbsp;</label></div>
-                            @Html.TextBoxFor(model => model.ngayKT, new {@class="form-control", disabled = "disabled"})
+                            @Html.TextBoxFor(model => model.ngayKT, new { type = "date", @class = "form-control", required = "required" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Người làm chung:</label></div>
-                            @Html.TextBoxFor(model => model.nguoilamchung, new { @class = "form-control", disabled = "disabled" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col"><label class="col-form-label">Trạng thái:&nbsp;</label></div>
-                            <select name="status" class="form-control">
-                                <option value="0" @if(Model.trangthai == "0"){<text>selected="selected"</text>}>đang làm</option>
-                                <option value="1"@if(Model.trangthai == "1"){<text>selected="selected"</text>}>hoàn thành</option>
-                                <option value="-1"@if(Model.trangthai == "-1"){<text>selected="selected"</text>}>trễ</option>
+
+                            <select class="form-control" multiple="multiple" name="partner" required="required">
+                                @foreach (var record in Model.getAllAccount)
+                                {
+                                    <option value="@record.user_name">@record.user_name</option>
+                                }
                             </select>
+                            <input type="hidden" name="userid" value="@Model.userid" />
                         </div>
                     </div>
+
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col"><label class="col-form-label">Comment:</label></div>
-                            @Html.TextBoxFor(model => model.binhluan, new { @class="form-control" })
+                            <div class="col"><label class="col-form-label">Phạm vi : </label></div>
+                            @Html.DropDownList("range", new List<SelectListItem>
+                                     { new SelectListItem { Text = "private", Value = "private", Selected=true},
+                                       new SelectListItem { Text = "public", Value = "public"},
+                                       }, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col text-center"><button class="btn btn-primary" type="submit">Save</button></div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col text-center"><button class="btn btn-primary" type="submit">ADD</button></div>
+                            </div>
                         </div>
-                    </div>
-                </form>
+
+                }
             </div>
+
+
+
         </section>
     </main>
+    <script>
+
+    </script>
 
     <script src="~/Content/detail/assets/js/jquery.min.js"></script>
-
+    
     <script src="~/Content/detail/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
     <script src="~/Content/detail/assets/js/theme.js"></script>

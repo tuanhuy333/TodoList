@@ -1,0 +1,94 @@
+﻿@model test1.ViewModel.TodoViewModel
+  
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Edit</title>
+    <link rel="stylesheet" href="~/Content/detail/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="~/Content/detail/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+</head>
+
+<body>
+    <main class="page hire-me-page">
+        <section class="portfolio-block hire-me">
+            <div class="container">
+                <div class="heading">
+                    <h2>CHi Tiết</h2>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.nguoitao)</label></div>
+                            <div class="col"><input class="form-control" value="@Html.DisplayFor(model => model.nguoitao)" type="text" disabled=""></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.tenCV)</label></div>
+                            <div class="col"><input class="form-control" value="@Html.DisplayFor(model => model.tenCV)" type="text"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.ngayBD)</label></div>
+                            <div class="col"><input class="form-control" type="date"   value="@Html.DisplayFor(model => model.ngayBD)" disabled=""></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.ngayKT)</label></div>
+                            <div class="col"><input class="form-control" type="date" value="@Html.DisplayFor(model => model.ngayBD)" disabled=""></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.nguoilamchung)</label></div>
+                            <div class="col">
+                                <div class="dropdown">
+                                  @Html.DropDownListFor(m => m., new SelectList(Enum.GetValues(typeof(Gender))),"Select Gender")
+
+                                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                    <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.trangthai)</label></div>
+                            <div class="col"><input class="form-control" type="text" disabled=""></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><label class="col-form-label">@Html.DisplayNameFor(model => model.binhluan)</label></div>
+                            <div class="col"><input class="form-control" type="text"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col text-center"><button class="btn btn-primary" type="button">Save</button></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    
+    <script src="~/Content/detail/assets/js/jquery.min.js"></script>
+    
+    <script src="~/Content/detail/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
+    <script src="~/Content/detail/assets/js/theme.js"></script>
+</body>
+
+</html>
