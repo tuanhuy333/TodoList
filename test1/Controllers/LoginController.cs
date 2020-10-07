@@ -20,11 +20,12 @@ namespace test1.Controllers
         public JsonResult ValidateUser(string userid, string password)
         {
             var data = from c in db.accounts where c.user_name == userid && c.user_password == password select c;
+            account a = data.FirstOrDefault<account>();
             if (data.Count() > 0)
             {
                 // lưu vào Session
                 Session["username"] = userid;
-                return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { Success = true,type =  a.user_type}, JsonRequestBehavior.AllowGet);
             }
                
                

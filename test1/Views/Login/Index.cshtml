@@ -45,22 +45,22 @@
         $('#login').click(function () {
 
             // validate
-            
+
             var errorMessage = "";
             if ($('#userid').val() == '') {
                 errorMessage = "Please enter your UserName \n";
-               
+
             }
 
 
             if ($('#password').val() == '') {
                 errorMessage += "Please enter your Password\n";
-                
+
             }
 
             if (errorMessage.length > 0) {
                 $('#error').text(errorMessage);
-                
+
                 return false;
             }
 
@@ -79,9 +79,14 @@
                 success: function (response) {
 
                     if (response.Success) {
+                        var type = response.type;
+                        if (type == 0) {
+                            window.location.href = '@Url.Action("ShowTableAdmin", "TodoAdmin")';
+                        } else {
+                            window.location.href = '@Url.Action("ShowTable", "Todo")';
+                        }
 
 
-                        window.location.href = '@Url.Action("ShowTable", "Todo")';
 
                     }
                     else

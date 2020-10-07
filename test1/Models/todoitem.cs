@@ -11,18 +11,13 @@ namespace test1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class todoitem
     {
         public int todo_id { get; set; }
         public int user_id { get; set; }
         public string title { get; set; }
-        
-        
         public System.DateTime start_date { get; set; }
-        
-        public string DateCreatedFormatted { get { return this.start_date.ToString("dd/MM/yyyy"); } }
         public System.DateTime end_date { get; set; }
         public int status { get; set; }
         public string partner { get; set; }

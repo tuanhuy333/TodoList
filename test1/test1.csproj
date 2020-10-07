@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TodoAdminController.cs" />
     <Compile Include="Controllers\TodoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -303,6 +304,7 @@
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Todo\add.cshtml" />
     <Content Include="Views\Todo\Edit.cshtml" />
+    <Content Include="Views\TodoAdmin\ShowTableAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\detail\assets\" />

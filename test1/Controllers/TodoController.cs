@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Objects;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
+
 using System.Web.Mvc;
 using test1.Models;
 using test1.ViewModel;
@@ -14,14 +16,42 @@ namespace test1.Controllers
         todoEntities _context = new todoEntities();
 
 
+
+
+        [HttpPost]
+        public ActionResult updateStatus(int todo_id)
+        {
+            todoitem todo = (from t in _context.todoitems
+                            where t.todo_id == todo_id
+                            select t).FirstOrDefault();
+            todo.status = 1;
+            _context.SaveChanges();
+            return RedirectToAction("showTable","Todo");
+        }
         // GET: Todo
         public ActionResult ShowTable()
         {
             if (Session["username"] != null)
             {
+
                 return View();
             }
             return RedirectToAction("index", "login", new { area = "" }); // có thể truyền string "ch đăng nhập" để thông báo
+        }
+
+        public void checkDateAndUpdate()
+        {
+           
+            var today = DateTime.Now;
+
+            var q = _context.todoitems.Where(t => DbFunctions.TruncateTime(t.end_date) < today.Date)
+                            .OrderBy(t => t.end_date).ToList();
+            
+            foreach (var item in q)
+            {
+                item.status = -1; // đã trễ
+                _context.SaveChanges();
+            }
         }
         public ActionResult LoadData()
         {
@@ -31,46 +61,46 @@ namespace test1.Controllers
             {
                  username = Session["username"].ToString();
             }
-            
+           
 
             try
             {
-                
-                   
-                    var draw = Request.Form.GetValues("draw").FirstOrDefault();
-                    var start = Request.Form.GetValues("start").FirstOrDefault();
-                    var length = Request.Form.GetValues("length").FirstOrDefault();
-                    var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
-                    var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
-                    var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                checkDateAndUpdate();
+
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
 
 
-                    //Paging Size (10,20,50,100)    
-                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
-                    int skip = start != null ? Convert.ToInt32(start) : 0;
-                    int recordsTotal = 0;
+                //Paging Size (10,20,50,100)    
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
 
 
 
-                
+
                 // tất cả todo của nhân viên
-                var data1 =         (from t in _context.todoitems
-                                    join a in _context.accounts on t.user_id equals a.user_id
-                                  
-                                       
-                                       
-                                    select new
-                                    {
-                                        t.title,
-                                        t.start_date,
-                                        t.end_date,
-                                        t.status,
-                                        t.partner,  
-                                        t.todo_id,
-                                        t.phamvi,
-                                        a.user_name
-                                       
-                                    });
+                var data1 = (from t in _context.todoitems
+                             join a in _context.accounts on t.user_id equals a.user_id
+
+
+
+                             select new
+                             {
+                                 t.title,
+                                 t.start_date,
+                                 t.end_date,
+                                 t.status,
+                                 t.partner,
+                                 t.todo_id,
+                                 t.phamvi,
+                                 a.user_name
+
+                             });
                 // todo của nhân viên khac có phạm vi là private và là staff
                 var data2 = from t in _context.todoitems
                             join a in _context.accounts on t.user_id equals a.user_id
@@ -91,9 +121,32 @@ namespace test1.Controllers
                                 a.user_name
 
                             };
-                var customerData = data1.Except(data2); // tập hợp ko có trong 2
+
+                // không làm chung
+                var data3 = from t in _context.todoitems
+                            join a in _context.accounts on t.user_id equals a.user_id
+                            where a.user_type == 1 + ""  // la nhan vien
+                                && a.user_name != username
+                                && !t.partner.Contains(username)// ko có 'huy'
+                                && t.phamvi == "private"
 
 
+                            select new
+                            {
+                                t.title,
+                                t.start_date,
+                                t.end_date,
+                                t.status,
+                                t.partner,
+                                t.todo_id,
+                                t.phamvi,
+
+                                a.user_name
+
+                            };
+                var customerData = data1.Except(data2).Except(data3); // tập hợp ko có trong 2
+
+                
                 //Sorting    
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
                     {
@@ -102,15 +155,20 @@ namespace test1.Controllers
                     //Search    
                     if (!string.IsNullOrEmpty(searchValue))
                     {
-                        customerData = customerData.Where(m => m.user_name == searchValue);
+                        customerData = customerData.Where(m => m.user_name.Contains( searchValue)
+                                                    || m.title.Contains(searchValue) 
+                                                    || m.end_date.ToString().Contains(searchValue)
+                                                    || m.phamvi.Contains(searchValue));
                     }
                   
 
                     //total number of rows count     
                     recordsTotal = customerData.Count();
 
-                    //Paging     
-                    var data = customerData.OrderBy(a => a.start_date).Skip(skip).Take(pageSize).ToList();
+                    //Sort and Paging     
+                    var data = customerData.OrderByDescending(a => a.status) // sắp xếp theo tình trạng công việc
+                                            
+                                        .Skip(skip).Take(pageSize).ToList(); // phân trang
 
                 //Returning Json Data  
 

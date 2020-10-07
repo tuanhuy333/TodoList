@@ -34,17 +34,9 @@ warning 6002: The table/view 'todo.dbo.comment' does not have a primary key defi
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="content_comment" Type="text" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'todo.dbo.todoitem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="todoitem">
           <Key>
             <PropertyRef Name="todo_id" />
-            
-            
-            
-            
-            
-            
           </Key>
           <Property Name="todo_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
@@ -52,11 +44,12 @@ warning 6002: The table/view 'todo.dbo.todoitem' does not have a primary key def
           <Property Name="start_date" Type="date" Nullable="false" />
           <Property Name="end_date" Type="date" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
-          <Property Name="partner" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="partner" Type="nvarchar" MaxLength="255" />
           <Property Name="file_attach" Type="nvarchar" MaxLength="255" />
           <Property Name="phamvi" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="DbContextStoreContainer">
+          <EntitySet Name="todoitem" EntityType="Self.todoitem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="account" EntityType="Self.account" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [account].[user_id] AS [user_id], 
@@ -74,19 +67,6 @@ warning 6002: The table/view 'todo.dbo.todoitem' does not have a primary key def
     [comment].[user_id] AS [user_id], 
     [comment].[content_comment] AS [content_comment]
     FROM [dbo].[comment] AS [comment]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="todoitem" EntityType="Self.todoitem" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [todoitem].[todo_id] AS [todo_id], 
-    [todoitem].[user_id] AS [user_id], 
-    [todoitem].[title] AS [title], 
-    [todoitem].[start_date] AS [start_date], 
-    [todoitem].[end_date] AS [end_date], 
-    [todoitem].[status] AS [status], 
-    [todoitem].[partner] AS [partner], 
-    [todoitem].[file_attach] AS [file_attach], 
-    [todoitem].[phamvi] AS [phamvi]
-    FROM [dbo].[todoitem] AS [todoitem]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -112,7 +92,7 @@ warning 6002: The table/view 'todo.dbo.todoitem' does not have a primary key def
           <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="partner" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="partner" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="file_attach" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="phamvi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
