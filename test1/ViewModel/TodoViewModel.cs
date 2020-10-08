@@ -21,10 +21,13 @@ namespace test1.ViewModel
         public string nguoilamchung { get; set; }
         public string binhluan { get; set; }
         public List<account> getAllAccount { get; set; }
-
         public int todo_id { get; set; }
         public string username { get; set; }
         public int userid { get; set; }
+        public HttpPostedFileBase file { get; set; }
+        public string filepath { get; set; }
+        public List<CommentViewModel> listComment { get; set; }
+        public string range { get; set; }
 
 
     }

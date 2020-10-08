@@ -1,6 +1,6 @@
 ﻿@model test1.ViewModel.TodoViewModel
 @{
-    
+
     Layout = null;
 }
 
@@ -23,9 +23,10 @@
         <section class="portfolio-block hire-me">
             <div class="container">
                 <div class="heading">
-                    <h2>CHi Tiết</h2>
+                    <h2>Chỉnh Sửa</h2>
                 </div>
-                <form action="" method="post">
+                @using (Html.BeginForm("edit", "TodoAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Tên Nhân Viên:</label></div>
@@ -37,7 +38,7 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Tên công việc:</label></div>
-                            @Html.TextBoxFor(model => model.tenCV, new { @class = "form-control", disabled = "disabled" })
+                            @Html.TextBoxFor(model => model.tenCV, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,39 +50,101 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Ngày kết thúc:&nbsp;</label></div>
-                            @Html.TextBoxFor(model => model.ngayKT, new { @class = "form-control", disabled = "disabled" })
+                            @Html.TextBoxFor(model => model.ngayKT, new { @class = "form-control", type = "date" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Người làm chung:</label></div>
-                            @Html.TextBoxFor(model => model.nguoilamchung, new { @class = "form-control", disabled = "disabled" })
+                            <select class="form-control" multiple="multiple" name="partner">
+                                @foreach (var record in Model.getAllAccount)
+                                {
+                                    if (record.user_name.Contains(Model.nguoilamchung))
+                                    {
+                                        <option value="@record.user_name" selected="selected">@record.user_name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@record.user_name">@record.user_name</option>
+
+                                    }
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><label class="col-form-label">Trạng thái:&nbsp;</label></div>
                             <select name="status" class="form-control" disabled="disabled">
-                                <option value="0" @if (Model.trangthai == "0") { <text> selected="selected" </text> }>đang làm</option>
-                                <option value="1" @if (Model.trangthai == "1") { <text> selected="selected" </text> }>hoàn thành</option>
-                                <option value="-1" @if (Model.trangthai == "-1") { <text> selected="selected" </text> }>trễ</option>
+                                <option value="0" @if (Model.trangthai == "0") { <text> selected="selected" </text> }>
+                                    đang làm
+                                </option>
+                                <option value="1" @if (Model.trangthai == "1") { <text> selected="selected" </text> }>
+                                    hoàn thành
+                                </option>
+                                <option value="-1" @if (Model.trangthai == "-1") { <text> selected="selected" </text> }>
+                                    trễ
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col"><label class="col-form-label">File:</label></div>
-                            <a href="@Url.Action("DownloadFile", "Todo",new { todo_id = @Model.todo_id })" target="_blank">
-                                @Model.filepath
-                            </a>
+                            <div class="col"><label class="col-form-label">Phạm vi : </label></div>
+                           @* @Html.DropDownList("range", new List<SelectListItem>
+                                     { new SelectListItem { Text = "private", Value = "private", Selected=true},
+                                       new SelectListItem { Text = "public", Value = "public"},
+                                       }, new { @class = "form-control" })*@
+                        <select class="form-control" name="partner">
+
+                            @if (Model.range.Equals("private"))
+                            {
+                                <option value="private" selected="selected">private</option>
+                            }
+                            else
+                            {
+                                <option value="private">private</option>
+                            }
+                            @if (Model.range.Equals("public"))
+                            {
+                                <option value="public" selected="selected">public</option>
+                            }
+                            else
+                            {
+                                <option value="public">public</option>
+                            }
+
+
+
+                        </select>
                         </div>
                     </div>
-                    @*<div class="form-group">
+                    if (Model.filepath == "" || Model.filepath ==null)
+                    {
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col"><label class="col-form-label">File : </label></div>
+                                @Html.TextBox("file", "", new { type = "file", @class = "form-control" })
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col"><label class="col-form-label">File:</label></div>
+                                <a href="@Url.Action("DownloadFile", "Todo", new { todo_id = @Model.todo_id })" target="_blank">
+                                    @Model.filepath
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
                         <div class="form-row">
                             <div class="col text-center"><button class="btn btn-primary" type="submit">Save</button></div>
                         </div>
-                    </div>*@
-                </form>
+                    </div>
+                }
                 <div class="row">
                     <div class="col-md-3">
 
@@ -129,7 +192,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </section>
     </main>
     <script src="~/Content/detail/assets/js/jquery.min.js"></script>

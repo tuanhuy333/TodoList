@@ -235,12 +235,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\CommentViewModel.cs" />
     <Compile Include="ViewModel\TodoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\TextFile1.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\comment.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -305,6 +307,7 @@
     <Content Include="Views\Todo\add.cshtml" />
     <Content Include="Views\Todo\Edit.cshtml" />
     <Content Include="Views\TodoAdmin\ShowTableAdmin.cshtml" />
+    <Content Include="Views\TodoAdmin\edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\detail\assets\" />

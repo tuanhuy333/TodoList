@@ -27,7 +27,7 @@
         <br />
         <div style="width:90%; margin:0 auto;">
             <h2 class="text-center font-weight-bold text-primary">Danh sách công việc</h2>
-            <a class="btn btn-info" href="/Todo/add/">Thêm mới</a>
+            @*<a class="btn btn-info" href="/Todo/add/">Thêm mới</a>*@
 
             <br />
             <br />
@@ -120,7 +120,7 @@
                     
                       {
                           "render": function (data, type, full, meta)
-                          { return '<a class="btn btn-info" href="/Todo/Edit/' + full.user_name + '">Edit</a>'; }
+                          { return '<a class="btn btn-info" href="/TodoAdmin/Edit/' + full.todo_id + '">Edit</a>'; }
                       }
                       /*
                       

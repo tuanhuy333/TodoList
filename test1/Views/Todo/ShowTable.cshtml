@@ -47,6 +47,7 @@
                         <th>Phạm vi</th>
                         <th>Trạng thái</th>
                         <th>Đánh dấu đã làm</th>
+                        <th>Xem Chi Tiết</th>
                         
                     </tr>
                 </thead>
@@ -152,7 +153,10 @@
                                    return '';
                                }
                            }
-                       }
+                    },
+                       {
+                        "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Todo/Edit/' + full.todo_id + '">Xem</a>'; }
+                    }
                     /*
                        {
                            data: null, render: function (data, type, row) {
